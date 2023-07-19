@@ -35,9 +35,13 @@ class LivroController{
         try {   
             const id = req.params.id;
             const result = await livro.findById(id);
-            res.status(200).json(result)
+            if(result == null){
+                res.status(404).json({message: "Object not found!"});
+            }else{
+                res.status(200).json(result);
+            }
         } catch (error) {
-            res.status(400).json({message: error.message});
+            res.status(400).json({message: "ID inválido!"});
         }
     }
 
