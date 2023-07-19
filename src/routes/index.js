@@ -1,5 +1,6 @@
 import express from "express";
 import livro from "./livroRoutes.js";
+import autor from "./autorRoutes.js";
 
 const route = (app) => {
     app.route('/').get((req, res) => {
@@ -8,7 +9,8 @@ const route = (app) => {
 
     app.use(
         express.json(),
-        livro
+        livro,
+        autor
     )
 }
 
