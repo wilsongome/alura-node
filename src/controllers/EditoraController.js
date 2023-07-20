@@ -1,13 +1,10 @@
-import livro from "../models/livro.js";
+import editora from "../models/Editora.js";
 
-class LivroController{
+class EditoraController{
 
     static index = async (req, res) => {
         try {
-            const result = await livro.find()
-            .populate('autor')
-            .populate('editora')
-            .exec();
+            const result = await editora.find();
             res.status(200).json(result)
         } catch (error) {
             res.status(500).json(error);
@@ -16,7 +13,7 @@ class LivroController{
 
     static store = async (req, res) => {
         try {   
-            const result = await livro.create(req.body);
+            const result = await editora.create(req.body);
             res.status(200).json(result)
         } catch (error) {
             res.status(500).json({message: error.message});
@@ -26,8 +23,8 @@ class LivroController{
     static update = async (req, res) => {
         try {   
             const id = req.params.id;
-            await livro.findByIdAndUpdate(id, {$set: req.body}).populate('autor').exec();
-            const result = await livro.findById(id);
+            await editora.findByIdAndUpdate(id, {$set: req.body})
+            const result = await editora.findById(id);
             res.status(200).json(result)
         } catch (error) {
             res.status(500).json({message: error.message});
@@ -37,7 +34,7 @@ class LivroController{
     static edit = async (req, res) => {
         try {   
             const id = req.params.id;
-            const result = await livro.findById(id).populate('autor').populate('editora').exec();
+            const result = await editora.findById(id);
             if(result == null){
                 res.status(404).json({message: "Object not found!"});
             }else{
@@ -51,8 +48,8 @@ class LivroController{
     static delete = async (req, res) => {
         try {   
             const id = req.params.id;
-            const result = await livro.findByIdAndDelete(id);
-            res.status(200).json({message: "Livro deletado com sucesso!"});
+            const result = await editora.findByIdAndDelete(id);
+            res.status(200).json({message: "Editora deletado com sucesso!"});
         } catch (error) {
             res.status(400).json({message: error.message});
         }
@@ -60,4 +57,4 @@ class LivroController{
 
 }
 
-export default LivroController;
+export default EditoraController;
