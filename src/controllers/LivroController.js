@@ -4,7 +4,14 @@ class LivroController{
 
     static index = async (req, res) => {
         try {
-            const result = await livro.find()
+            
+            const editora = req.query.editora ? req.query.editora : null;
+            let filter = null;
+            if(editora != null){
+                filter = {'editora' : editora};
+            }
+
+            const result = await livro.find(filter)
             .populate('autor')
             .populate('editora')
             .exec();
